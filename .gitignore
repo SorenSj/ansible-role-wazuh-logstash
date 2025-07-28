@@ -1,5 +1,5 @@
-*.retry
-*/__pycache__
-*.pyc
-.cache
-
+#
+# Ignore Ansible-related files
+.ansible/
+# Ignore Visual Studio Code settings
+.vscode/
