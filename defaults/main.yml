@@ -1,7 +1,9 @@
 ---
-logstash_version: '7.x'
+# defaults file for logstash
 
-logstash_package: logstash
+# Elastic offers both "oss" (Apache 2.0 license) and "elastic"
+# (Elastic license). Select the type here. Either "oss" or "elastic"
+logstash_type: oss
 
 logstash_listen_port_beats: 5044
 
@@ -9,13 +11,15 @@ logstash_elasticsearch_hosts:
   - http://localhost:9200
 
 logstash_local_syslog_path: /var/log/syslog
-logstash_monitor_local_syslog: true
+logstash_monitor_local_syslog: false
 
 logstash_dir: /usr/share/logstash
 
+logstash_node_name: "logstash | default('logstash')"
 logstash_ssl_dir: /etc/pki/logstash
-logstash_ssl_certificate_file: ""
-logstash_ssl_key_file: ""
+logstash_ssl_certificate_file: "{{ logstash_node_name }}.pem"
+logstash_ssl_key_file: "{{ logstash_node_name }}-key.pem"
+logstash_security: true
 
 logstash_enabled_on_boot: true
 
