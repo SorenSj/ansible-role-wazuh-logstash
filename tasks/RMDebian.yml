@@ -1,0 +1,6 @@
+---
+- name: Debian/Ubuntu | Remove logstash repository (and clean up left-over metadata)
+  ansible.builtin.apt_repository:
+    repo: "{{ wazuh_repo.apt }}"
+    state: absent
+  changed_when: false
