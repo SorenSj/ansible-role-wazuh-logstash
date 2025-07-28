@@ -1,0 +1,26 @@
+---
+- name: Copy logstash SSL keys
+  block:
+  - name: Ensure logstash SSL key pair directory exists.
+    ansible.builtin.file:
+      path: "{{ logstash_ssl_ca_dir }}"
+      state: directory
+      owner: root
+      group: root
+      mode: "0500"
+
+  - name: Copy the certificates from local to the logstash instance
+    ansible.builtin.copy:
+      src: "{{ local_certs_path }}/wazuh-certificates/{{ item }}"
+      dest: "{{ logstash_ssl_ca_dir }}"
+      owner: logstash
+      group: logstash
+      mode: "0755"
+    with_items:
+      - "root-ca.pem"
+    notify: restart logstash
+
+  tags:
+    - security
+  when:
+    - logstash_security
